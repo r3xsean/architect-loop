@@ -90,9 +90,9 @@ If the spec is missing, skip the Spec axis and note this in the final report.
 
 ### 6. Auto-fix loop
 
-Findings are fixed automatically, not reported for the user to chase: hand them to the builder model to fix, then re-run the axes that had findings, cross-model, against the new diff. Up to three rounds. Fixes must be minimal — address only the finding; a fix may not broaden scope, add features, or alter approved plan decisions (escalate instead). Judgement-call findings (baseline smells) are fixed too unless the fix would enlarge the diff beyond the spec's scope — then they're logged and left.
+Findings are fixed automatically, not reported for the user to chase: hand them to the builder model to fix, then verify each round with a **delta check**, cross-model — the re-reviewer gets the findings plus the diff of the fix itself, and answers one question: does this resolve the finding without introducing anything new? Never a fresh full-axis pass per round. Up to three rounds. Fixes must be minimal — address only the finding; a fix may not broaden scope, add features, or alter approved plan decisions (escalate instead). Judgement-call findings (baseline smells) are fixed too unless the fix would enlarge the diff beyond the spec's scope — then they're logged and left.
 
-Once all failed axes pass (or the third round ends), re-run **all** active axes once against the final diff — a Spec fix can break Standards or open a Tail — and carry that run's results into the report.
+At **high** blast radius only, once all delta checks pass (or the third round ends), re-run **all** active axes once against the final diff — a Spec fix can break Standards or open a Tail — and carry that run's results into the report. At low/medium, passing delta checks end the loop; the full diff was already independently reviewed once.
 
 Escalate to the user only when a finding survives all three rounds, or its fix would change a decision the approved plan recorded — plan decisions belong to the user, not the builder. Log every auto-fix so the debrief covers it.
 

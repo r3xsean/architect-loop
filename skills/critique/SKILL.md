@@ -44,7 +44,7 @@ Launch one reviewer per axis — Craft, Brief, and Domain-risk when it applies �
 
 ### 5. Apply
 
-Findings are fixed automatically, not reported for the caller to chase: hand them to the maker to revise — revisions minimal, addressing only the finding — then re-run the axes that had findings against the revision, once. Escalate to the caller only a finding whose fix would change something they approved — a taste pick, a brief requirement, any caller-approved decision — or that survives the revision. Log what changed.
+Findings are fixed automatically, not reported for the caller to chase: hand them to the maker to revise — revisions minimal, addressing only the finding — then verify with a **delta check**, cross-model, once: the re-reviewer gets the findings plus only the revised passages, and answers whether each finding is resolved without introducing anything new. Never a fresh full-axis pass. Escalate to the caller only a finding whose fix would change something they approved — a taste pick, a brief requirement, any caller-approved decision — or that survives the revision. Log what changed.
 
 ### 6. Aggregate
 
