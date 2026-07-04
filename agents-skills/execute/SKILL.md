@@ -28,6 +28,8 @@ Follow the TDD skill, one tracer bullet at a time, seams from step 1. Build mech
 
 **Delegate experiential seams to Claude** via the claude skill — `opus` by default, `fable` when the ticket or plan marks the surface taste-critical. Split full-stack slices at the boundary: you build the mechanics and tests, Claude builds the visible surface. Plumbing that merely feeds the UI is yours — never delegate CSS-adjacent backend. Claude's delegation prompt carries the spec, the plan's decisions, and the seam's acceptance criteria; Claude may not change approved plan decisions — if its taste solution requires that, log it as a one-way door instead of absorbing it.
 
+**Visual verification flows the opposite way from taste.** Anything that must be checked by looking at it running — screenshots, browser walks, computer use, rendered states, interaction flows — is yours regardless of who built it: Claude builds the visible surface, you verify it live (you are the stronger vision model, and screenshots are token-heavy). Every experiential seam gets a visual pass against its acceptance criteria before review.
+
 Log every forced deviation from the plan under "Deviations" with the conservative call made. Done when every acceptance criterion has a passing test — not when the feature feels finished.
 
 ## 3. Review until clean

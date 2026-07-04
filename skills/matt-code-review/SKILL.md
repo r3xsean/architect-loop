@@ -35,7 +35,7 @@ Blast radius decides only which axes run: **Standards + Spec** always; **high** 
 
 Look for the originating spec, in this order:
 
-1. The **acceptance contract** from the blueprint — the human-authored invariants and anti-requirements in the spec file. When present it is the primary spec input; at high blast radius the Spec reviewer derives its own probes from it (checks the builder never saw) and runs them where practical.
+1. The **acceptance contract** from the blueprint — the human-authored invariants and anti-requirements in the spec file. When present it is the primary spec input; at high blast radius the Spec reviewer derives its own probes from it (checks the builder never saw) and runs them where practical. Probes that need a running app, a browser, or screenshots run on Codex regardless of which family reviews the axis — vision and computer use are its strength, and screenshots are token-heavy on Claude.
 2. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.
 3. A path the user passed as an argument.
 4. A PRD/spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
