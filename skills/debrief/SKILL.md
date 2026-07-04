@@ -7,7 +7,7 @@ The session did more than the user followed, and a diff can't show it — much o
 
 ## 1. Gather
 
-The diff against the run's fixed point, implementation-notes.md, the spec the work was built against, and any "needs your ruling" items handed in.
+The diff against the run's fixed point, the spec the work was built against (its `## Implementation Notes` section included), and any "needs your ruling" items handed in.
 
 ## 2. The report
 
@@ -15,7 +15,7 @@ One HTML file, opened for the user:
 
 - **Context and intuition first** — why the change works, not just what changed, including the existing code paths its behaviour depends on.
 - **What was done**, mapped per acceptance criterion.
-- **Deviations**, verbatim from implementation-notes.md.
+- **Deviations**, verbatim from the spec's Implementation Notes.
 - **Needs your ruling** — every decision the run took conservatively that the user must confirm or reverse.
 - **A quiz at the bottom** the user must pass perfectly; each wrong answer points back to the exact section skimmed.
 

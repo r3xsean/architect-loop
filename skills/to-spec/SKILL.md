@@ -73,3 +73,5 @@ A description of the things that are out of scope for this spec.
 Any further notes about the feature.
 
 </spec-template>
+
+The published spec accrues two appended sections over its life: `## Tickets` (written by to-tickets) and `## Implementation Notes` (written by executing sessions — seams, rubrics, deviations, conservative calls). Both live in the spec itself; never create a separate tickets or implementation-notes file.

@@ -27,4 +27,4 @@ Follow the `to-tickets` skill: the approved breakdown from step 1, published per
 
 ## 4. Handoff
 
-Emit a ready-to-paste prompt for a fresh agent session, naming the spec and plan by path. Code tickets run on Codex: a prompt for a fresh Codex session invoking its `execute` skill (`~/.agents/skills/execute/SKILL.md`) on the first frontier ticket. Non-code tickets stay on Claude: `/produce <first frontier ticket>`. Stop: the build belongs to a new session.
+Emit a ready-to-paste prompt for a fresh agent session, naming the spec by path (never the plan — its content is already folded into the spec), instructing it to complete the whole spec ticket by ticket — never just the first ticket. Keep the prompt SIMPLE: 2–3 sentences, no restated decisions, ticket lists, or section names — the spec holds all of that; the session reads it there. Code tickets run on Codex via its `execute` skill (`~/.agents/skills/execute/SKILL.md`); non-code tickets stay on Claude via `/produce`. Stop: the build belongs to a new session.

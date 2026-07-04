@@ -19,7 +19,7 @@ See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking g
 
 A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test. When a ticket, spec, or plan exists, derive the seams from its acceptance criteria and record them (in implementation-notes.md if one is being kept) — do not ask. Only when no artifact answers, confirm them with the user: "What's the public interface, and which seams should we test?" No test is written at an unrecorded seam. You can't test everything — fixing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test. When a ticket, spec, or plan exists, derive the seams from its acceptance criteria and record them in the spec's `## Implementation Notes` section (create it if absent — never a separate notes file) — do not ask. Only when no artifact answers, confirm them with the user: "What's the public interface, and which seams should we test?" No test is written at an unrecorded seam. You can't test everything — fixing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
 ## Anti-patterns
 

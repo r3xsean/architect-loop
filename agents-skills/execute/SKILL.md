@@ -3,7 +3,7 @@ name: execute
 description: Take one code ticket from grabbed to merge-ready, fully automatic — build with TDD, delegate taste seams to Claude, review cross-model until clean, debrief. Use when asked to execute, implement, or build a ticket from a spec/plan.
 ---
 
-Runs in a fresh Codex session, one ticket at a time. Input: the ticket, plus the spec and plan it came from. **Fully automatic: never stop to ask.** Every judgment call gets the conservative choice, logged in `implementation-notes.md`; anything that needs the user's ruling is surfaced in the debrief, never mid-run.
+Runs in a fresh Codex session, one ticket at a time. Input: the ticket, plus the spec and plan it came from. **Fully automatic: never stop to ask.** Every judgment call gets the conservative choice, logged in the spec's `## Implementation Notes` section — appended to the spec itself, never a separate file (a stray implementation-notes.md is churn); anything that needs the user's ruling is surfaced in the debrief, never mid-run.
 
 Shared procedure dependencies live on the Claude side as the single source of truth — read and apply them, never fork copies:
 
@@ -14,13 +14,13 @@ Shared procedure dependencies live on the Claude side as the single source of tr
 
 ## 1. Pin the territory
 
-Read the ticket, the spec, the plan, and any prior implementation-notes. Pin the starting commit — the fixed point every later diff and review runs against. Restate the ticket's acceptance criteria as a checkable list, derive the seams under test from them, and classify each seam:
+Read the ticket, the spec (including its existing `## Implementation Notes`, if prior tickets wrote any), and the plan. Pin the starting commit — the fixed point every later diff and review runs against. Restate the ticket's acceptance criteria as a checkable list, derive the seams under test from them, and classify each seam:
 
 - **mechanical** — correctness is checkable by tests alone (data model, API, persistence, auth mechanics, infra, wiring)
 - **behavioral** — checkable by tests plus the acceptance contract
 - **experiential** — quality is judged by looking at it: UI look/feel, interaction flow, visual hierarchy, animation timing, empty/error states, user-facing copy
 
-Record all of it in implementation-notes.md. Done when every acceptance criterion has a classified seam.
+Record all of it under the spec's `## Implementation Notes` (create the section on first write). Done when every acceptance criterion has a classified seam.
 
 ## 2. Build
 
@@ -38,7 +38,7 @@ Apply the gauntlet skill against the pinned commit. You are the builder, so the 
 
 ## 4. Debrief
 
-Apply the debrief skill, passing the pinned commit, implementation-notes.md, and the spec, with the logged one-way doors as its "needs your ruling" items. Its quiz is the merge gate: nothing merges until the user passes it and has ruled on every open item.
+Apply the debrief skill, passing the pinned commit and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its quiz is the merge gate: nothing merges until the user passes it and has ruled on every open item.
 
 ## 5. Close out
 

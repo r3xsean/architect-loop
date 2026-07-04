@@ -26,7 +26,7 @@ The spec, plan, or ticket the work was made against. If none is found, ask the c
 
 In order of authority:
 
-1. The rubric recorded for this work (e.g. in implementation-notes.md).
+1. The rubric recorded for this work (in the spec's `## Implementation Notes` section).
 2. Any documented style guide, voice guide, or design system the project keeps.
 3. **Reference works the user pointed at.** When the domain is one nobody involved has vocabulary for, the references *are* the quality bar — critique by comparison against them ("do the cuts breathe like the reference's do?"), never against an unwritten rubric.
 
