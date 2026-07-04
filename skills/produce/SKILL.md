@@ -20,7 +20,7 @@ Invoke the `critique` skill against the pinned state. Apply the findings; a find
 
 ## 4. Debrief
 
-Invoke the `debrief` skill, passing the pinned state and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its quiz is the publish gate: nothing ships until the user passes it and has ruled on every open item.
+Invoke the `debrief` skill, passing the pinned state and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its report is the publish gate: nothing ships until the user has read it and ruled on every open item.
 
 ## 5. Close out
 

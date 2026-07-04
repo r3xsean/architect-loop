@@ -38,7 +38,7 @@ Apply the gauntlet skill against the pinned commit. You are the builder, so the 
 
 ## 4. Debrief
 
-Apply the debrief skill, passing the pinned commit and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its quiz is the merge gate: nothing merges until the user passes it and has ruled on every open item.
+Apply the debrief skill, passing the pinned commit and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its report is the merge gate: nothing merges until the user has read it and ruled on every open item.
 
 ## 5. Close out
 
