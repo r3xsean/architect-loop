@@ -1,5 +1,5 @@
 ---
-name: matt-code-review
+name: gauntlet
 description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along blast-radius-scaled axes — Standards (does the code follow this repo's documented coding standards?), Spec (does the code match what the originating issue/PRD/acceptance contract asked for?), and at high blast radius Tail (does it do anything extra — data egress, auth boundaries, destructive paths?). Every axis runs cross-model in parallel; findings are auto-fixed and re-reviewed at every radius. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
 ---
 

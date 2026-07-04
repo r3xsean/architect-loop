@@ -8,7 +8,7 @@ Runs in a fresh Codex session, one ticket at a time. Input: the ticket, plus the
 Shared procedure dependencies live on the Claude side as the single source of truth — read and apply them, never fork copies:
 
 - TDD: `~/.claude/skills/tdd/SKILL.md`
-- Review: `~/.claude/skills/matt-code-review/SKILL.md`
+- Review: `~/.claude/skills/gauntlet/SKILL.md`
 - Debrief: `~/.claude/skills/debrief/SKILL.md`
 - Delegating to Claude: `~/.agents/skills/claude/SKILL.md` (wrapper: `claude-run.sh <fable|opus>`)
 
@@ -32,9 +32,9 @@ Follow the TDD skill, one tracer bullet at a time, seams from step 1. Build mech
 
 Log every forced deviation from the plan under "Deviations" with the conservative call made. Done when every acceptance criterion has a passing test — not when the feature feels finished.
 
-## 3. Review until clean
+## 3. Run the gauntlet
 
-Apply the review skill against the pinned commit. You are the builder, so the cross-model rule sends every axis to Claude: one `claude-run.sh opus` run per axis, prompts and inputs exactly as the review skill specifies. The auto-fix loop stays with you. A finding that contradicts the spec is a one-way door — take the conservative side and log it for the debrief, never absorb it silently. Done only when a full pass returns zero new findings.
+Apply the gauntlet skill against the pinned commit. You are the builder, so the cross-model rule sends every axis to Claude: one `claude-run.sh opus` run per axis, prompts and inputs exactly as the gauntlet specifies. The auto-fix loop stays with you. A finding that contradicts the spec is a one-way door — take the conservative side and log it for the debrief, never absorb it silently. Done when the gauntlet terminates clean, or with its surviving findings escalated into the debrief.
 
 ## 4. Debrief
 
