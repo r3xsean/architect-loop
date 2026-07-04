@@ -4,13 +4,13 @@ description: Turn a raw intent into resolved architectural decisions — the use
 disable-model-invocation: true
 ---
 
-The user has said what they want. Their job is the **one-way doors** — decisions expensive to reverse: data models, interfaces, UX flows, security boundaries. Every two-way door is yours: decide it conservatively, record it in a running **Decisions Log**, never ask.
+The user has said what they want — code or not: a feature, a course, a video, a document. Their job is the **one-way doors** — decisions expensive to reverse: data models, interfaces, UX flows, security boundaries, or their domain's equivalents (structure, voice, visual style, what gets cut). Every two-way door is yours: decide it conservatively, record it in a running **Decisions Log**, never ask.
 
 If this machine has mattpocock/skills installed, reach for its `grilling`, `research`, and `prototype` skills where the steps below name those activities.
 
 ## 1. Blindspot pass (silent)
 
-Explore the codebase and the intent relentlessly: enumerate every unknown the work will run into, including the unknown unknowns the user wouldn't think to ask about. Sort each one — one-way door into the **decision queue**, two-way door into the Decisions Log. Do not show the user the raw unknown list. Done when every unknown found is either queued or logged — none unsorted.
+Explore the territory — the codebase or the materials — and the intent relentlessly: enumerate every unknown the work will run into, including the unknown unknowns the user wouldn't think to ask about. Sort each one — one-way door into the **decision queue**, two-way door into the Decisions Log. Do not show the user the raw unknown list. Done when every unknown found is either queued or logged — none unsorted.
 
 ## 2. Mode checkpoint
 

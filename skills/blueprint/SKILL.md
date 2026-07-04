@@ -5,7 +5,7 @@ description: Blueprint a decided piece of work — a decisions-first HTML plan t
 
 Runs after the deciding is done. Input: resolved decisions and a Decisions Log (from the architect skill, a grilling, or a worked wayfinder map).
 
-Steps 2 and 3 follow the processes documented in the sibling `to-spec` and `to-tickets` skills — read their SKILL.md files and apply them. One adaptation: their user-confirmation points (to-spec's seam check, to-tickets' breakdown quiz) are satisfied by the plan approval in step 1 — never re-asked.
+Steps 2 and 3 follow the processes documented in the sibling `to-spec` and `to-tickets` skills — read their SKILL.md files and apply them. One adaptation: their user-confirmation points (to-spec's seam check, to-tickets' breakdown quiz) are satisfied by the plan approval in step 1 — never re-asked. When the work isn't code, apply their shapes generally: the spec is the brief, decided; seams become acceptance criteria; tickets stay vertical slices of the deliverable (a lesson teachable, a section readable — never a layer across all of it).
 
 ## 1. The plan
 
@@ -27,4 +27,4 @@ Follow the `to-tickets` skill: the approved breakdown from step 1, published per
 
 ## 4. Handoff
 
-Emit a ready-to-paste prompt for a fresh agent session: `/execute <first frontier ticket>`, naming the spec and plan by path. Stop: the build belongs to a new session.
+Emit a ready-to-paste prompt for a fresh agent session — `/execute <first frontier ticket>` for code, `/produce <first frontier ticket>` otherwise — naming the spec and plan by path. Stop: the build belongs to a new session.

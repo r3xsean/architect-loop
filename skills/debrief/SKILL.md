@@ -1,6 +1,6 @@
 ---
 name: debrief
-description: Debrief a working session into one HTML report with a quiz the user must pass before merging. Use when the execute skill reaches its merge gate, or the user asks to be debriefed or quizzed on what changed.
+description: Debrief a working session into one HTML report with a quiz the user must pass before merging or publishing. Use when the execute or produce skill reaches its gate, or the user asks to be debriefed or quizzed on what changed.
 ---
 
 The session did more than the user followed, and a diff can't show it — much of the behaviour depends on existing code paths. The debrief closes that gap: it converts what the agent knows about the change back into things the user knows, and proves the transfer with a quiz.

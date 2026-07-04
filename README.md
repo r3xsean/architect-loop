@@ -5,25 +5,30 @@ An agent-portable skill set that compresses a full engineering workflow down to 
 ```
 /architect <intent>     → 👤 pick mode (with a recommendation) → 👤 answer the interview
 blueprint  (auto)       → 👤 approve the top of one HTML page
-/execute <ticket>       → fully automatic: build → review until clean
-debrief    (auto)       → 👤 rule on open items + pass a quiz   ← the merge gate
+/execute <ticket>       → code:     fully automatic — build (tdd) → review until clean
+/produce <ticket>       → non-code: fully automatic — draft rubric-first → critique until clean
+debrief    (auto)       → 👤 rule on open items + pass a quiz   ← the merge/publish gate
 close out  (auto)
 ```
+
+The loop is domain-agnostic — a feature, a course, a video, a document. Everything upstream (architect, blueprint, debrief) is shared; only the execution lane splits.
 
 The organizing idea comes from Thariq (@trq212): agents do bad work when they have to **guess**, and every guess traces back to an unanswered question — an *unknown*. The loop finds the questions cheaply (before wrong guesses get expensive), routes each kind of question to the right tool, and gates the merge on you actually understanding what was built.
 
 ## The skills
 
-### What I built (`skills/architect`, `blueprint`, `execute`, `debrief`)
+### What I built (`skills/architect`, `blueprint`, `execute`, `produce`, `critique`, `debrief`)
 
-Four orchestrators written for this loop, following the principles in Matt Pocock's [`writing-great-skills`](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills) (user- vs model-invocation, leading words, checkable completion criteria, progressive disclosure):
+Six skills written for this loop, following the principles in Matt Pocock's [`writing-great-skills`](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills) (user- vs model-invocation, leading words, checkable completion criteria, progressive disclosure):
 
 | Skill | Invocation | What it does |
 |---|---|---|
 | **architect** | user | Entry point. Silent blindspot pass sorts every unknown: one-way doors → a decision queue for you; two-way doors → decided conservatively and logged. Then a **mode checkpoint** — recommends grilling (one sitting) vs. wayfinder (multi-session map) with its reasoning, and you choose. The interview is **uncapped**: it ends when the decision queue is empty, not at a question count. |
 | **blueprint** | model | Plan → spec → tickets in one motion. A decisions-first HTML plan (one-way doors on top with rejected alternatives, mechanical churn collapsed at the bottom, "trusted to Claude"); on approval it runs to-spec and to-tickets automatically and emits the `/execute` handoff prompt. |
-| **execute** | user | One ticket, grabbed to merge-ready, **fully automatic — it never stops to ask**. Pins the starting commit, builds test-first via `tdd` (seams derived from acceptance criteria), reviews via `matt-code-review` until a pass returns zero new findings, then hands off to debrief. Judgment calls take the conservative choice and are logged for your ruling later, never raised mid-run. |
-| **debrief** | model | Thariq's post-implementation pattern: one HTML report — context and intuition first, work mapped per acceptance criterion, deviations verbatim, a "needs your ruling" queue — ending in **a quiz you must pass perfectly before anything merges**. Optional pitch/buy-in extension in `PITCH.md`. |
+| **execute** | user | The code lane: one ticket, grabbed to merge-ready, **fully automatic — it never stops to ask**. Pins the starting commit, builds test-first via `tdd` (seams derived from acceptance criteria), reviews via `matt-code-review` until a pass returns zero new findings, then hands off to debrief. Judgment calls take the conservative choice and are logged for your ruling later, never raised mid-run. |
+| **produce** | user | The non-code lane (courses, videos, documents, decks, designs) — execute's mirror, same never-stops-to-ask contract. Snapshots the deliverable's starting state, drafts **rubric-first** (the checkable bar for each slice written before the work that must meet it — tdd's red-before-green without tests), critiques via `critique` until clean, then debrief. |
+| **critique** | model | matt-code-review's non-code analog: two parallel sub-agent axes, never merged — **Craft** (rubric, style guide, or the reference works you pointed at — when nobody has vocabulary for the domain, the references *are* the quality bar) and **Brief** (spec fidelity: missing, scope-crept, or wrong). |
+| **debrief** | model | Thariq's post-implementation pattern, shared by both lanes: one HTML report — context and intuition first, work mapped per acceptance criterion, deviations verbatim, a "needs your ruling" queue — ending in **a quiz you must pass perfectly before anything merges or publishes**. Optional pitch/buy-in extension in `PITCH.md`. |
 
 ### Vendored from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT)
 
