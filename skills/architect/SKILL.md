@@ -21,7 +21,7 @@ Present the shape of the queue: how many questions are answerable now, how many 
 
 ## 3a. Grilling mode
 
-- Fact questions: dispatch background subagents to read primary sources only — official docs, source code, specs, never a secondary write-up — each returning a cited markdown file. Never block the interview on them; fold returning findings into later questions.
+- Fact questions: dispatch background subagents (`model: opus`, pinned — findings feed one-way doors) to read primary sources only — official docs, source code, specs, never a secondary write-up — each returning a cited markdown file. Never block the interview on them; fold returning findings into later questions.
 - Taste questions ("I'll know it when I see it"): build one throwaway HTML file of 3–4 wildly different variants for the user to react to.
 - Interview one question at a time, highest blast radius first. No cap on count: done only when the decision queue is empty.
 
