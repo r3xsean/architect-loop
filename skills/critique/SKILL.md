@@ -10,7 +10,12 @@ Two-axis critique of a deliverable against the fixed starting point the caller s
 
 Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Reviewers get the brief and the material — never the maker's narrative about it.
 
-Every critique runs **cross-model**: the axes go to the other model family than the maker's — via the `codex` skill wrapper (`~/.claude/skills/codex/codex-run.sh`, one background run per axis) when Claude made the work, Claude sub-agents when Codex did. When the caller asks, or the deliverable carries domain risk (regulated, legal, medical, financial claims, or brand-critical launches), add the **Domain-risk** axis (prompt in step 4).
+Every critique runs **cross-family**. Read the maker profile supplied by `produce`, then route every axis through the opposite-family wrapper:
+
+- Fable-made normal work → `codex-run.sh sol-medium`; consequential or domain-risk work → `sol-xhigh`.
+- Sol- or Luna-made normal work → `claude-run.sh fable-medium`; consequential, taste-critical, or domain-risk work → `fable-high`.
+
+When the caller asks, or the deliverable carries domain risk (regulated, legal, medical, financial claims, or brand-critical launches), add the **Domain-risk** axis.
 
 ## Process
 
@@ -34,7 +39,7 @@ A documented source always beats general taste; general taste is a judgement cal
 
 ### 4. Spawn all axes in parallel
 
-Launch one reviewer per axis — Craft, Brief, and Domain-risk when it applies — through the cross-model mechanism above. Claude reviewers are pinned `model: opus`, never inherited.
+Launch one reviewer per axis — Craft, Brief, and Domain-risk when it applies — through the routed cross-family mechanism above. Pin the profile; never inherit the caller's model.
 
 **Craft sub-agent prompt** — include the changed material, the craft sources from step 3 in full, and the brief: "Report every place the work falls short of a craft source: cite the source (rubric line, guide rule, or the reference and what it does differently). Distinguish hard violations of documented sources from judgement calls. Under 400 words."
 
@@ -44,7 +49,7 @@ Launch one reviewer per axis — Craft, Brief, and Domain-risk when it applies �
 
 ### 5. Apply
 
-Findings are fixed automatically, not reported for the caller to chase: hand them to the maker to revise — revisions minimal, addressing only the finding — then verify with a **delta check**, cross-model, once: the re-reviewer gets the findings plus only the revised passages, and answers whether each finding is resolved without introducing anything new. Never a fresh full-axis pass. Escalate to the caller only a finding whose fix would change something they approved — a taste pick, a brief requirement, any caller-approved decision — or that survives the revision. Log what changed.
+Findings are fixed automatically, not reported for the caller to chase: hand them to the maker to revise — revisions minimal, addressing only the finding — then verify with a **delta check** using the same opposite-family profile. The re-reviewer gets the findings plus only the revised passages and answers whether each is resolved without introducing anything new. Never a fresh full-axis pass. Escalate only a finding whose fix changes an approved decision or survives the revision. Log what changed.
 
 ### 6. Aggregate
 

@@ -5,10 +5,10 @@ An agent-portable skill set that compresses a full engineering workflow down to 
 ```
 /architect <intent>     → 👤 say where you're starting from → blindspot digest teaches you
                           the territory → 👤 pick mode (with a recommendation) → 👤 answer
-                          the interview                                                    [Claude]
-blueprint  (auto)       → 👤 approve the top of one HTML page                              [Claude]
-execute <ticket>        → code:     fully automatic — build (tdd) → cross-model review     [Codex]
-/produce <ticket>       → non-code: fully automatic — draft rubric-first → cross-model critique [Claude]
+                          the interview → Sol challenge                            [Fable high]
+blueprint  (auto)       → 👤 approve the top of one HTML page                     [Fable high]
+execute <spec>          → code: complete every ticket → gauntlet                   [Sol xhigh]
+/produce <spec>         → non-code: rubric-first → cross-family critique       [Fable or Sol]
 debrief    (auto)       → 👤 read the report + rule on open items   ← the merge/publish gate
 close out  (auto)
 ```
@@ -17,15 +17,15 @@ The loop is domain-agnostic — a feature, a course, a video, a document. Everyt
 
 The organizing idea comes from Thariq (@trq212): agents do bad work when they have to **guess**, and every guess traces back to an unanswered question — an *unknown*. The loop finds the questions cheaply (before wrong guesses get expensive), routes each kind of question to the right tool, and gates the merge on you actually understanding what was built. And it works both directions: the blindspot pass doesn't just convert *your* unknown unknowns into questions Claude asks — it surfaces a **digest** that teaches them back to you (the traps, the quality bars you may not know exist, the vocabulary you'll need), so the person answering the one-way doors is calibrated before the first question lands.
 
-## Two models, one loop
+## Two primary sessions, one loop
 
-The loop runs on **two model families deliberately** — Claude (Anthropic) and GPT-5.5 (OpenAI, via Codex) — split by what each is best at, and crossed wherever work gets verified.
+The normal code path has two primary sessions: **Claude Fable high** runs `architect → blueprint`; after plan approval, a fresh **GPT-5.6 Sol xhigh** session runs the complete spec through `execute → gauntlet → debrief → close-out`. Each delegates bounded work without giving up ownership.
 
-**Division of labor.** Claude Fable owns taste and one-way doors: the architect interview, blueprint approval, non-code production, and any surface whose quality is judged by looking at it. GPT-5.5 owns implementation: it's the stronger straightforward builder, so the code lane runs on Codex. Delegated sub-agent work runs one tier down on each side (Claude Opus / gpt-5.5-xhigh) — frontier judgment where judgment is the deliverable, without frontier pricing on the churn.
+**Division of labor.** Fable decides: architecture, one-way doors, taste, writing, and review. Sol reasons and executes: implementation, research, debugging, artifacts, browser/computer work, and aggregation. Luna xhigh handles bounded checked leaves — mechanical implementation, extraction, classification, normalization, inventories, summaries, and parallel analysis — whose output Sol checks. Humans approve irreversible actions.
 
-**Cross-model verification, always.** The core rule: **the generator never grades its own work.** A model reviewing its own output inherits its own blind spots — the misunderstanding that produced the bug also produces the test that passes it and the review that misses it. So every review crosses families: Codex-built code is reviewed by Claude (Opus, pinned); Claude-made work is reviewed by GPT-5.5 (xhigh, pinned). Reviewers get the spec and the diff — never the builder's narrative about it (the builder's running notes live in the spec's `## Implementation Notes` section, which is stripped before the spec reaches any reviewer).
+**Cross-family verification, always.** The generator never grades its own work. Sol- or Luna-made work is reviewed by Fable medium, or Fable high when consequential or taste-critical. Fable-made work is reviewed by Sol medium, or Sol xhigh when consequential. Reviewers get the acceptance contract, sources, and actual diff or artifact — never the builder's Implementation Notes.
 
-**Taste delegation inside the build.** `execute` classifies every seam as *mechanical* (tests alone prove it), *behavioral* (tests + acceptance contract), or *experiential* (quality judged by looking: UI feel, interaction flow, copy, empty/error states). Codex builds the first two itself and delegates experiential seams to Claude — Opus by default, Fable when the ticket marks the surface taste-critical. Full-stack slices split at the visible boundary; plumbing that feeds the UI stays with Codex. **Visual verification flows the opposite way:** anything checked by looking at it *running* — screenshots, browser walks, computer use — is Codex's regardless of who built it. Claude has the taste to design a surface; GPT-5.5 has the vision (and the token economics) to verify one. So Claude builds the UI, Codex walks it.
+**Delegation inside the build.** `execute` classifies every seam as mechanical, behavioral, or experiential. Sol owns integration and delegates only bounded leaves: Luna xhigh handles checked mechanical work; Fable medium handles ordinary experiential seams and Fable high handles taste-critical ones. Visual verification flows back to Sol: screenshots, browser walks, rendered states, and interaction checks are inspected live by the execution session.
 
 **Auto-fix, scaled by blast radius.** The blueprint records a **blast radius** (`low`/`medium`/`high` — high when work touches auth, money, user data, destructive actions, or external side effects) and, at medium+, a human-authored **acceptance contract**: invariants and anti-requirements in plain language ("X never happens; data never leaves Y"). Review always runs Standards + Spec; high adds a **Tail** axis — does the code do the right thing *plus something extra* (data egress, secret logging, tenant-boundary crossings)? — and contract-derived probes the builder never saw. Findings at every radius are auto-fixed by the builder and verified cross-model with **delta checks** — the re-reviewer sees the findings plus the fix's own diff and answers one question: resolved, without introducing anything new? — up to three rounds. Only at high radius do all axes re-sweep the final diff (a Spec fix can break Standards or open a Tail). The human is pulled in for exactly two things: a finding that survives all rounds, or a fix that would change an approved plan decision.
 
@@ -33,26 +33,26 @@ The result is a zero-touch happy path — build → cross-model review → auto-
 
 ## The skills
 
-### Claude side (`skills/` → `~/.claude/skills/`)
+### Shared skills (`skills/` → both agents)
 
 Skills written for this loop follow the principles in Matt Pocock's [`writing-great-skills`](https://github.com/mattpocock/skills/tree/main/skills/productivity/writing-great-skills) (user- vs model-invocation, leading words, checkable completion criteria, progressive disclosure):
 
 | Skill | Invocation | What it does |
 |---|---|---|
-| **architect** | user | Entry point. Opens with one **starting-point** question (your experience with the problem, codebase, domain) that calibrates everything after. The blindspot pass sorts every unknown — one-way doors → a decision queue for you; two-way doors → decided conservatively and logged — then surfaces a **Blindspot Digest**: not the raw list, but the traps ahead, the quality bars you may not know exist, and the vocabulary you'll need to judge the coming decisions. When the intent is a *problem* rather than a chosen approach, a **divergence check** sketches 3–5 materially different directions (cheapest → most ambitious) before any deciding. Then a **mode checkpoint** — recommends grilling (one sitting) vs. wayfinder (multi-session map) with its reasoning, and you choose. Taste questions **calibrate before showing**: variants to react to if you can judge the domain, a short teach-first explainer if you can't. The interview is **uncapped**: it ends when the decision queue is empty, not at a question count. Fact research runs on background sub-agents (Opus, pinned — findings feed one-way doors). |
-| **blueprint** | model | Plan → spec → tickets in one motion. A decisions-first HTML plan (one-way doors on top with rejected alternatives, mechanical churn collapsed at the bottom); the plan also carries the **blast radius** call and, at medium+, the **acceptance contract**. On approval it runs to-spec and to-tickets automatically — tickets land *inside the spec file*, never a separate tickets file — and emits the handoff: code tickets to a fresh Codex session, non-code to `/produce`. |
-| **produce** | user | The non-code lane (courses, videos, documents, decks, designs) — execute's mirror, same never-stops-to-ask contract. Snapshots the deliverable's starting state, drafts **rubric-first** (the checkable bar for each slice written before the work that must meet it — tdd's red-before-green without tests), critiques via `critique` until clean, then debrief. |
+| **architect** | user | Fable-high entry point: starting-point calibration, blindspot digest, divergence, grilling/wayfinder, Sol-routed research, then a Sol-xhigh assumption challenge before Blueprint. |
+| **blueprint** | model | Decisions-first HTML plan, Sol-medium feasibility check, blast radius and acceptance contract, then spec and tickets in one motion. Approval emits the routed fresh-session handoff. |
+| **produce** | user | Shared non-code lane: Fable makes prose/taste work; Sol makes checkable artifacts. Drafts rubric-first, critiques through the opposite family, then debriefs. |
 | **critique** | model | gauntlet's non-code analog, **always cross-model**: parallel axes, never merged — **Craft** (rubric, style guide, or the reference works you pointed at) and **Brief** (spec fidelity: missing, scope-crept, or wrong), plus a **Domain-risk** axis for regulated or brand-critical content. Findings are applied by the maker automatically and re-critiqued; only caller-approved decisions escalate. |
 | **gauntlet** | model | Blast-radius-scaled, **always cross-model** review: **Standards** (repo conventions + a Fowler smell baseline), **Spec** (issue/PRD/acceptance contract, with contract-derived probes at high radius), and at high radius **Tail** ("does it do anything extra?" — data egress, auth boundaries, destructive paths). Auto-fix loop at every radius; reviewer models pinned, never inherited. |
 | **debrief** | model | Thariq's post-implementation pattern, shared by both lanes: one HTML report — context and intuition first, work mapped per acceptance criterion, deviations verbatim, a "needs your ruling" queue. **Nothing merges or publishes until you've read it and ruled on every open item.** Optional pitch/buy-in extension in `PITCH.md`. |
-| **codex** | model | The cross-model plumbing: runs GPT-5.5 as a subagent via `codex-run.sh` (model and xhigh effort pinned, resumable threads, prompt on stdin). Used by gauntlet and critique to review Claude-made work, and for second opinions. |
+| **codex** | model | GPT plumbing with three YOLO profiles: `sol-medium`, `sol-xhigh`, and `luna-xhigh`, with resumable threads. |
 
 ### Codex side (`agents-skills/` → `~/.agents/skills/`)
 
 | Skill | What it does |
 |---|---|
-| **execute** | The code lane, now owned by Codex: one ticket, grabbed to merge-ready, **fully automatic — it never stops to ask**. Pins the starting commit, classifies seams (mechanical / behavioral / experiential), builds test-first via the shared `tdd` skill, **delegates experiential seams to Claude** (opus default, fable when taste-critical), runs the shared `gauntlet` skill — every axis reviewed by Claude Opus — then debriefs. Reads its procedure dependencies (`tdd`, `gauntlet`, `debrief`) straight from `~/.claude/skills/` as the single source of truth: no forked copies. On a true one-way door with no reversible path, it stops with a decision packet rather than decide for you. |
-| **claude** | The mirror plumbing: runs Claude as a subagent via `claude-run.sh <fable\|opus>` (effort pinned, resumable sessions). Its model picker is the taste rule in miniature: opus for execution-grade work, fable when judgment is the deliverable. |
+| **execute** | Sol-xhigh whole-spec code lane: pins one starting commit, works every ticket on the frontier with TDD, delegates checked leaves to Luna and experiential seams to Fable, runs one final cross-family gauntlet, then debriefs. |
+| **claude** | Fable plumbing with YOLO `fable-medium` and `fable-high` profiles and resumable sessions. |
 
 ### Vendored from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT)
 
@@ -65,20 +65,16 @@ The skills the orchestrators lean on, copied as-is except where noted:
 1. **`tdd`** — the seam-confirmation step is artifact-first: when a ticket/spec/plan exists, seams under test are *derived from its acceptance criteria* and recorded in the spec's `## Implementation Notes` section instead of asked. The question survives only as a fallback when no artifact answers — which keeps `execute` fully automatic without losing the pre-agreed-seams discipline.
 2. **`code-review` → `gauntlet`** — first renamed (to `matt-code-review`) to avoid shadowing Claude Code's built-in `/code-review`, then reworked into the cross-model, blast-radius-scaled, auto-fixing review described above and renamed to match what it became. Matt's two-axis skeleton (Standards/Spec, parallel and never merged) survives at its core.
 3. **`to-spec` / `to-tickets`** — vendored from [mattpocock/skills#410](https://github.com/mattpocock/skills/pull/410). `to-tickets` now publishes tickets *into the source spec file* as a closing `## Tickets` section (one document, two passes — spec-writing and ticket-slicing stay separate acts so slicing pressure can't contaminate the spec, but there's no second file to track); `tickets.md` survives only as a fallback when no spec exists. The spec similarly accrues a `## Implementation Notes` section from executing sessions (seams, rubrics, deviations, conservative calls) — the spec is the single document the whole loop reads and writes; there is no separate implementation-notes.md to track or leak.
-4. **`research`** — background agent pinned to Opus, never inheriting a weaker session model.
+4. **`research`** — Sol owns primary-source synthesis; Luna may handle checked extraction leaves.
 
 Everything is plain markdown + HTML artifacts + file-based specs and tickets, and the cross-model calls are two small shell wrappers — so the loop ports to any pair of coding agents that read skills.
 
 ## Install
 
-Copy each side into its agent's skills directory:
+Run the idempotent installer; shared skills go to both agents and agent-specific skills overlay them:
 
 ```sh
-# Claude side
-cp -R skills/* ~/.claude/skills/
-
-# Codex side
-cp -R agents-skills/* ~/.agents/skills/
+./install.sh
 ```
 
 Then start any piece of work with `/architect <what you want>` in Claude Code.

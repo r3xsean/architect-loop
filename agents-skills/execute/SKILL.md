@@ -1,49 +1,55 @@
 ---
 name: execute
-description: Take one code ticket from grabbed to merge-ready, fully automatic — build with TDD, delegate taste seams to Claude, review cross-model until clean, debrief. Use when asked to execute, implement, or build a ticket from a spec/plan.
+description: Execute an approved code spec to merge-ready in one Sol session — work every ticket along the frontier with TDD, delegate checked leaves and taste seams, review cross-family until clean, then debrief. Use when asked to implement or complete a spec or ticket plan.
 ---
 
-Runs in a fresh Codex session, one ticket at a time. Input: the ticket, plus the spec and plan it came from. **Fully automatic: never stop to ask.** Every judgment call gets the conservative choice, logged in the spec's `## Implementation Notes` section — appended to the spec itself, never a separate file (a stray implementation-notes.md is churn); anything that needs the user's ruling is surfaced in the debrief, never mid-run.
+Run the standard whole-spec path in a fresh **GPT-5.6 Sol xhigh** session. A small, independently invoked routine ticket may use Sol medium. Input is the approved spec with its `## Tickets` section. **Fully automatic: never stop to ask.** Decide two-way doors conservatively and append them to the spec's `## Implementation Notes`; reserve true one-way doors for the final debrief unless no reversible path exists.
 
-Shared procedure dependencies live on the Claude side as the single source of truth — read and apply them, never fork copies:
+Read and apply the shared procedure dependencies directly:
 
-- TDD: `~/.claude/skills/tdd/SKILL.md`
-- Review: `~/.claude/skills/gauntlet/SKILL.md`
-- Debrief: `~/.claude/skills/debrief/SKILL.md`
-- Delegating to Claude: `~/.agents/skills/claude/SKILL.md` (wrapper: `claude-run.sh <fable|opus>`)
+- TDD: `~/.agents/skills/tdd/SKILL.md`
+- Review: `~/.agents/skills/gauntlet/SKILL.md`
+- Debrief: `~/.agents/skills/debrief/SKILL.md`
+- Claude delegation: `~/.agents/skills/claude/SKILL.md`
+- Codex leaf delegation: `~/.agents/skills/codex/SKILL.md`
 
 ## 1. Pin the territory
 
-Read the ticket, the spec (including its existing `## Implementation Notes`, if prior tickets wrote any), and the plan. Pin the starting commit — the fixed point every later diff and review runs against. Restate the ticket's acceptance criteria as a checkable list, derive the seams under test from them, and classify each seam:
+Read the complete spec, its existing Implementation Notes, every ticket, the repository guidance, domain glossary, and relevant ADRs. Pin the starting commit once; every final diff and review compares against it. Resolve the ticket graph and identify the current frontier.
 
-- **mechanical** — correctness is checkable by tests alone (data model, API, persistence, auth mechanics, infra, wiring)
-- **behavioral** — checkable by tests plus the acceptance contract
-- **experiential** — quality is judged by looking at it: UI look/feel, interaction flow, visual hierarchy, animation timing, empty/error states, user-facing copy
+Restate every ticket's acceptance criteria as checkable outcomes. Done when every requirement in the spec belongs to exactly one ticket and the next frontier is unambiguous.
 
-Record all of it under the spec's `## Implementation Notes` (create the section on first write). Done when every acceptance criterion has a classified seam.
+## 2. Work the frontier
 
-## 2. Build
+Take one unblocked ticket at a time. Before building it, derive its test seams from the acceptance criteria and classify each:
 
-Follow the TDD skill, one tracer bullet at a time, seams from step 1. Build mechanical and behavioral seams yourself.
+- **mechanical** — tests alone can establish correctness;
+- **behavioral** — tests plus the acceptance contract establish correctness;
+- **experiential** — quality is judged by looking: UI feel, interaction flow, hierarchy, animation, empty/error states, or user-facing copy.
 
-**Delegate experiential seams to Claude** via the claude skill — `opus` by default, `fable` when the ticket or plan marks the surface taste-critical. Split full-stack slices at the boundary: you build the mechanics and tests, Claude builds the visible surface. Plumbing that merely feeds the UI is yours — never delegate CSS-adjacent backend. Claude's delegation prompt carries the spec, the plan's decisions, and the seam's acceptance criteria; Claude may not change approved plan decisions — if its taste solution requires that, log it as a one-way door instead of absorbing it.
+Record the seams and classification in Implementation Notes, then follow the TDD skill one tracer bullet at a time.
 
-**Visual verification flows the opposite way from taste.** Anything that must be checked by looking at it running — screenshots, browser walks, computer use, rendered states, interaction flows — is yours regardless of who built it: Claude builds the visible surface, you verify it live (you are the stronger vision model, and screenshots are token-heavy). Every experiential seam gets a visual pass against its acceptance criteria before review.
+Sol owns integration, behavioral work, debugging, and every final decision. Delegate only bounded leaves:
 
-Log every forced deviation from the plan under "Deviations" with the conservative call made. Done when every acceptance criterion has a passing test — not when the feature feels finished.
+- **Luna xhigh** via `codex-run.sh luna-xhigh` for repetitive mechanical implementation, extraction, normalization, inventories, or parallel analysis whose result has an explicit test or inspection. Sol checks and integrates every Luna result; ambiguity or factual synthesis escalates back to Sol.
+- **Fable medium** via `claude-run.sh fable-medium` for ordinary experiential seams; use **Fable high** when the spec marks the surface taste-critical or consequential. Fable may not change an approved decision.
+
+Visual verification stays with Sol. Run every experiential seam live through the appropriate browser, computer, screenshot, or rendered-artifact path and check it against its acceptance criteria.
+
+Log forced deviations under `Deviations`, mark the ticket complete where it lives, recompute the frontier, and continue. Done only when every ticket is complete and every acceptance criterion has a passing check.
 
 ## 3. Run the gauntlet
 
-Apply the gauntlet skill against the pinned commit. You are the builder, so the cross-model rule sends every axis to Claude: one `claude-run.sh opus` run per axis, prompts and inputs exactly as the gauntlet specifies. The auto-fix loop stays with you. A finding that contradicts the spec is a one-way door — take the conservative side and log it for the debrief, never absorb it silently. Done when the gauntlet terminates clean, or with its surviving findings escalated into the debrief.
+Apply the gauntlet once to the complete diff against the pinned starting commit. The normal reviewer is Fable medium; high blast radius uses Fable high. Sol applies minimal fixes and the same Fable profile performs each delta check. Done when the gauntlet terminates cleanly or its bounded surviving findings are recorded for the debrief.
 
 ## 4. Debrief
 
-Apply the debrief skill, passing the pinned commit and the spec (its Implementation Notes included), with the logged one-way doors as its "needs your ruling" items. Its report is the merge gate: nothing merges until the user has read it and ruled on every open item.
+Apply the debrief skill to the full run, passing the pinned commit, completed spec, Implementation Notes, auto-fix log, and any one-way doors needing a ruling. Nothing merges until the user has read the report and ruled on every open item.
 
 ## 5. Close out
 
-Mark the ticket done where it lives, link the artifacts from it, and fold any deviation that invalidates a plan decision, map entry, or ADR back into that document. Done when the tracker, the map, and the docs all agree with reality.
+After the gate, align ticket state, map entries, specs, and ADRs with reality. Do not commit, merge, publish, deploy, send messages, or perform any other irreversible action without the user's explicit approval. Done when every tracked artifact agrees with the verified result.
 
 ## One-way doors mid-run
 
-Hitting a true one-way door: take the conservative reversible path and log it. If no reversible path exists, stop and leave a decision packet — the question, the options, what each forecloses — as the run's output; continuing would take a decision that belongs to the user.
+Take the most conservative reversible path and log it. If none exists, stop with a decision packet: the question, options, evidence, and what each option forecloses.

@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Run Codex as a subagent, with fixed model/effort and resumable sessions.
+# Run Codex as a subagent with a routed GPT-5.6 profile, YOLO permissions,
+# and resumable sessions.
 #
 # Usage:
-#   codex-run.sh              <<'EOF' ... prompt ... EOF   # new session
-#   codex-run.sh <THREAD_ID>  <<'EOF' ... prompt ... EOF   # resume session
+#   codex-run.sh <sol-medium|sol-xhigh|luna-xhigh> [THREAD_ID]
+#     <<'EOF' ... prompt ... EOF
 #
 # Prompt is always read from stdin. Prints:
 #   THREAD_ID=<id>
@@ -11,10 +12,30 @@
 #   <Codex's final answer>
 set -euo pipefail
 
+PROFILE=${1:?usage: codex-run.sh <sol-medium|sol-xhigh|luna-xhigh> [THREAD_ID]}
+shift
+
+case "$PROFILE" in
+  sol-medium) MODEL=${ARCHITECT_LOOP_SOL_MODEL:-gpt-5.6-sol}; EFFORT=medium ;;
+  sol-xhigh)  MODEL=${ARCHITECT_LOOP_SOL_MODEL:-gpt-5.6-sol}; EFFORT=xhigh ;;
+  luna-xhigh) MODEL=${ARCHITECT_LOOP_LUNA_MODEL:-gpt-5.6-luna}; EFFORT=xhigh ;;
+  *) echo "error: unknown profile '$PROFILE'" >&2; exit 2 ;;
+esac
+
+if [ $# -gt 1 ]; then
+  echo "error: the prompt goes on stdin; only an optional thread ID may follow the profile" >&2
+  exit 2
+fi
+
+if [ "${ARCHITECT_LOOP_DRY_RUN:-0}" = 1 ]; then
+  printf 'model=%s effort=%s yolo=true\n' "$MODEL" "$EFFORT"
+  exit 0
+fi
+
 ANSWER=$(mktemp) EVENTS=$(mktemp)
 trap 'rm -f "$ANSWER" "$EVENTS"' EXIT
 
-FLAGS=(-m gpt-5.5 -c model_reasoning_effort=xhigh
+FLAGS=(-m "$MODEL" -c model_reasoning_effort="$EFFORT"
        --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check
        --json -o "$ANSWER")
 

@@ -27,7 +27,12 @@ Before going further, confirm the fixed point resolves (`git rev-parse <fixed-po
 
 The blueprint records it in the spec (`low` / `medium` / `high`). If no spec or no field, infer: **high** when the diff touches auth, money, user data, destructive actions, or external side effects; otherwise **low** — and state the inference in one line so the user can override.
 
-Every review runs **cross-model**: the axis prompts go to the other model family than the one that wrote the diff — a Claude-built diff is reviewed via the `codex` skill wrapper (`~/.claude/skills/codex/codex-run.sh`, one background run per axis, prompt on stdin); a Codex-built diff is reviewed by Claude — from a Claude session, `general-purpose` sub-agents; from a Codex session, one `~/.agents/skills/claude/claude-run.sh opus` run per axis. Reviewers get the spec, diff command output, and standards — nothing from the builder's session. Since the builder's notes now live *inside* the spec, strip the spec's `## Implementation Notes` section before handing it to any reviewer: those notes are the builder's self-report, and the generator must not grade its own work.
+Every review runs **cross-family**. Route axis prompts by builder and blast radius:
+
+- Sol- or Luna-built normal work → `claude-run.sh fable-medium`; high-blast-radius or taste-critical work → `fable-high`.
+- Fable-built normal work → `codex-run.sh sol-medium`; consequential work → `sol-xhigh`.
+
+Reviewers get the spec, diff command output, and standards — nothing from the builder's session. Strip the spec's `## Implementation Notes` before handing it to a reviewer: those notes are the builder's self-report, and the generator must not grade its own work.
 
 Blast radius decides only which axes run: **Standards + Spec** always; **high** adds the **Tail** axis and the contract-derived probes. Findings at every radius go through the auto-fix loop (step 6).
 
@@ -67,7 +72,7 @@ Each smell reads *what it is* → *how to fix*; match it against the diff:
 
 ### 5. Spawn all axes in parallel
 
-Launch every axis the blast radius calls for at once, through the cross-model mechanism from step 2 — one background `codex-run.sh` run per axis for a Claude-built diff; for a Codex-built one, one Claude reviewer per axis (`Agent` tool, `general-purpose` subagent, `model: opus` — or `claude-run.sh opus` when the runner is Codex). Reviewer models are pinned, never inherited — reviewer quality must not depend on what model the session happens to run.
+Launch every axis the blast radius calls for at once through the routed cross-family mechanism from step 2. Use one independent run per axis. Reviewer profiles are pinned, never inherited.
 
 **Standards axis prompt** — include:
 
@@ -90,7 +95,7 @@ If the spec is missing, skip the Spec axis and note this in the final report.
 
 ### 6. Auto-fix loop
 
-Findings are fixed automatically, not reported for the user to chase: hand them to the builder model to fix, then verify each round with a **delta check**, cross-model — the re-reviewer gets the findings plus the diff of the fix itself, and answers one question: does this resolve the finding without introducing anything new? Never a fresh full-axis pass per round. Up to three rounds. Fixes must be minimal — address only the finding; a fix may not broaden scope, add features, or alter approved plan decisions (escalate instead). Judgement-call findings (baseline smells) are fixed too unless the fix would enlarge the diff beyond the spec's scope — then they're logged and left.
+Findings are fixed automatically, not reported for the user to chase: hand them to the builder to fix, then verify each round with a **delta check** using the same opposite-family profile. The re-reviewer gets the findings plus the fix diff and answers one question: does this resolve the finding without introducing anything new? Never a fresh full-axis pass per round. Up to three rounds. Fixes must be minimal — address only the finding; a fix may not broaden scope, add features, or alter approved plan decisions. Judgement-call findings are fixed unless the fix would enlarge the diff beyond scope; then log them.
 
 At **high** blast radius only, once all delta checks pass (or the third round ends), re-run **all** active axes once against the final diff — a Spec fix can break Standards or open a Tail. The re-sweep runs **exactly once** and its findings are triaged, never looped: a blocking finding (violated invariant; Tail on data egress, auth/tenant boundaries, or destructive paths) gets one final fix + delta-check cycle — if it survives that, escalate; everything non-blocking is logged for the debrief, not fixed. No second re-sweep under any circumstances — the loop terminates by escalation, not by another pass.
 

@@ -1,14 +1,19 @@
 ---
 name: produce
-description: Take one ticket of non-code work from grabbed to publish-ready, fully automatic — draft rubric-first, critique until clean, debrief. The user's first touchpoint is the final HTML.
+description: Produce an approved non-code spec to publish-ready — route prose and taste work to Fable, checkable artifacts to Sol, draft rubric-first, critique cross-family until clean, then debrief.
 disable-model-invocation: true
 ---
 
-The non-code lane of the loop — documents, courses, videos, decks, designs, anything whose territory isn't a codebase. Runs in a fresh session, one ticket at a time. Input: the ticket, plus the spec and plan it came from. **Fully automatic: never stop to ask.** Every judgment call gets the conservative choice, logged in the spec's `## Implementation Notes` section — appended to the spec itself, never a separate file (a stray implementation-notes.md is churn); anything that needs the user's ruling is surfaced in the debrief, never mid-run.
+The non-code lane uses the same procedure on either family. Route by the hard part:
+
+- **Fable medium** for routine prose, writing, and taste-led composition; **Fable high** for public positioning, consequential writing, or taste-critical work.
+- **Sol medium** for documents, decks, spreadsheets, rendered artifacts, browser/computer work, and other checkable production; **Sol xhigh** when ambiguous, long-running, high-risk, or expensive to recover.
+
+Input is the approved spec and its tickets; the plan has already been folded into the spec. **Fully automatic: never stop to ask.** Log conservative calls in the spec's `## Implementation Notes` section and surface genuine one-way doors in the debrief.
 
 ## 1. Pin the territory
 
-Read the ticket, the spec (including its existing `## Implementation Notes`, if prior tickets wrote any), and the plan. Snapshot the deliverable's current state — the fixed point every later comparison and critique runs against. Restate the ticket's acceptance criteria as a checkable list. Done when every criterion is one the finished work can be checked against, not a vibe.
+Read the complete spec, its tickets, and existing Implementation Notes. Record the maker family/profile, snapshot the deliverable's current state, and resolve the ticket frontier. Restate the current ticket's acceptance criteria as a checkable list. Done when every criterion can be checked against the finished work, not a vibe.
 
 ## 2. Draft, rubric first
 
@@ -16,7 +21,7 @@ Before drafting each slice, write the rubric that slice must satisfy — derived
 
 ## 3. Critique until clean
 
-Invoke the `critique` skill against the pinned state. Apply the findings; a finding that contradicts the spec is a one-way door — take the conservative side and log it for the debrief, never absorb it silently. Re-critique after fixing. Done only when a full pass returns zero new findings.
+Invoke the `critique` skill against the pinned state and pass the maker profile. It selects the opposite-family reviewer. Apply the findings; a finding that contradicts the spec is a one-way door — take the conservative side and log it for the debrief, never absorb it silently. Re-critique after fixing. Done only when a full pass returns zero new findings.
 
 ## 4. Debrief
 

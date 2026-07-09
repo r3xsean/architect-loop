@@ -451,7 +451,7 @@
     </div>
     <div class="meta">
       <div><span class="k">Repository</span><a href="https://github.com/r3xsean/architect-loop">r3xsean/architect-loop</a></div>
-      <div><span class="k">Runs on</span><span>Claude Fable 5 × GPT-5.5</span></div>
+      <div><span class="k">Runs on</span><span>Claude Fable 5 × GPT-5.6 Sol/Luna</span></div>
       <div><span class="k">Domain</span><span>code &amp; non-code work</span></div>
       <div><span class="k">Entry point</span><span>/architect &lt;intent&gt;</span></div>
     </div>
@@ -465,9 +465,9 @@
 
     <div class="pipe">
       <div class="stage">
-        <span class="who claude">Claude</span>
+        <span class="who claude">Fable high</span>
         <div class="cmd">/architect &lt;intent&gt;</div>
-        <div class="what">One starting-point question calibrates everything. A blindspot pass sorts every unknown — one-way doors queue for you, two-way doors are decided and logged — then a <b>Blindspot Digest</b> teaches you the traps, quality bars, and vocabulary you'll need. Problem-shaped intents get a divergence check (3–5 directions, cheapest → most ambitious) before any deciding.</div>
+        <div class="what">One starting-point question calibrates everything. A blindspot pass sorts every unknown, then a <b>Blindspot Digest</b> teaches you the territory. Research routes to Sol, and a final Sol-xhigh challenge tests the resolved decisions before Blueprint.</div>
         <div class="chips">
           <span class="chip you">you — say where you're starting from</span>
           <span class="chip you">you — pick mode: grilling / wayfinder</span>
@@ -476,7 +476,7 @@
       </div>
       <div class="connector"></div>
       <div class="stage">
-        <span class="who claude">Claude</span>
+        <span class="who claude">Fable high</span>
         <div class="cmd">blueprint</div>
         <div class="what">A decisions-first HTML plan: one-way doors on top with rejected alternatives, mechanical churn collapsed at the bottom. Carries the <b>blast radius</b> call and, at medium+, the <b>acceptance contract</b>. On approval it writes the spec and slices tickets automatically — tickets live <em>inside</em> the spec file.</div>
         <div class="chips">
@@ -490,18 +490,18 @@
         <div class="lane code">
           <div class="lane-label">Code lane</div>
           <div class="stage">
-            <span class="who codex">Codex</span>
-            <div class="cmd">execute &lt;ticket&gt;</div>
-            <div class="what">Fully automatic — never stops to ask. Builds test-first (<code>tdd</code>), delegates taste seams to Claude, runs the <b>gauntlet</b> cross-model review, auto-fixes findings. Conservative calls logged to the spec's <code>## Implementation Notes</code>.</div>
+            <span class="who codex">Sol xhigh</span>
+            <div class="cmd">execute &lt;spec&gt;</div>
+            <div class="what">Completes every ticket along the frontier. Builds test-first, delegates checked leaves to Luna and experiential seams to Fable, then runs the cross-family <b>gauntlet</b> and auto-fix loop.</div>
             <div class="chips"><span class="chip auto">zero-touch</span></div>
           </div>
         </div>
         <div class="lane noncode">
           <div class="lane-label">Non-code lane</div>
           <div class="stage">
-            <span class="who claude">Claude</span>
-            <div class="cmd">/produce &lt;ticket&gt;</div>
-            <div class="what">The mirror contract for documents, courses, videos, decks. Drafts <b>rubric-first</b> — the bar written before the work that must meet it — then <b>critique</b> cross-model until a full pass returns zero findings.</div>
+            <span class="who both">Fable or Sol</span>
+            <div class="cmd">/produce &lt;spec&gt;</div>
+            <div class="what">Fable makes prose and taste-led work; Sol makes checkable documents, decks, spreadsheets, and rendered artifacts. Both draft <b>rubric-first</b> and critique through the opposite family.</div>
             <div class="chips"><span class="chip auto">zero-touch</span></div>
           </div>
         </div>
@@ -535,18 +535,18 @@
   <!-- ======================= TWO MODELS ======================= -->
   <section>
     <p class="eyebrow">Sheet 3 — Architecture</p>
-    <h2>Two models, one loop</h2>
-    <p class="lede">The loop runs on two model families <strong>deliberately</strong> — split by what each is best at, and crossed wherever work gets verified.</p>
+    <h2>Two primary sessions, one loop</h2>
+    <p class="lede">Fable high runs architect and Blueprint. After approval, a fresh Sol-xhigh session completes the entire code spec. Each delegates bounded work and verification crosses families.</p>
 
     <div class="duel">
       <div class="model m-claude">
-        <h3>Claude</h3>
-        <div class="role">owns taste &amp; one-way doors</div>
+        <h3>Claude Fable</h3>
+        <div class="role">decides and judges</div>
         <ul>
           <li>The architect interview and blueprint approval</li>
-          <li>Non-code production (<code>/produce</code>)</li>
-          <li>Any surface judged by looking at it — UI feel, flow, copy</li>
-          <li>Sub-agent work runs on Opus; Fable when judgment <em>is</em> the deliverable</li>
+          <li>Prose, positioning, and taste-led production</li>
+          <li>Experiential seams and cross-family review</li>
+          <li>Medium normally; high for consequential judgment</li>
         </ul>
       </div>
       <div class="cross" aria-hidden="true">
@@ -559,19 +559,19 @@
         <span class="lbl">each reviews the other's work</span>
       </div>
       <div class="model m-codex">
-        <h3>Codex / GPT-5.5</h3>
-        <div class="role">owns implementation</div>
+        <h3>Codex / GPT-5.6</h3>
+        <div class="role">executes, delegates &amp; verifies</div>
         <ul>
-          <li>The code lane (<code>execute</code>) — the stronger straightforward builder</li>
-          <li>Visual <em>verification</em>: screenshots, browser walks, computer use — even of UI Claude built</li>
-          <li>Contract-derived probes at high blast radius</li>
-          <li>Sub-agent work pinned to xhigh effort</li>
+          <li>Sol xhigh completes the whole approved code spec</li>
+          <li>Sol medium handles research and normal checked production</li>
+          <li>Luna xhigh handles bounded leaves that Sol checks</li>
+          <li>Sol owns visual verification and final aggregation</li>
         </ul>
       </div>
     </div>
 
     <div class="rule-card">The generator never grades its own work.</div>
-    <p style="margin-top: 20px;">A model reviewing its own output inherits its own blind spots — the misunderstanding that produced the bug also produces the test that passes it and the review that misses it. So every review crosses families: Codex-built code is reviewed by Claude (Opus, pinned); Claude-made work is reviewed by GPT-5.5 (xhigh, pinned). Reviewers get the spec and the diff — never the builder's narrative. The builder's running notes live in the spec's <code>## Implementation Notes</code> section, which is stripped before the spec reaches any reviewer.</p>
+    <p style="margin-top: 20px;">Sol- or Luna-made normal work is reviewed by Fable medium; consequential work by Fable high. Fable-made normal work is reviewed by Sol medium; consequential work by Sol xhigh. Reviewers get the acceptance contract, sources, and actual diff or artifact — never the builder's Implementation Notes.</p>
 
     <h3 style="margin-top: 36px;">Review effort scales with blast radius</h3>
     <p style="font-size: 0.95rem; color: var(--muted);">The blueprint records how much damage the work could do; review depth follows.</p>
@@ -597,11 +597,11 @@
     <p class="eyebrow">Sheet 4 — Bill of materials</p>
     <h2>The skills</h2>
 
-    <h3 class="side-label c-claude"><span class="dot"></span>Claude side <span class="path">skills/ → ~/.claude/skills/</span></h3>
+    <h3 class="side-label c-claude"><span class="dot"></span>Shared skills <span class="path">skills/ → both agents</span></h3>
     <div class="skill-list">
       <div class="skill">
         <div class="id"><span class="n">architect</span><span class="inv user">user-invoked</span></div>
-        <div class="desc">Entry point. Starting-point question → blindspot pass → <b>Blindspot Digest</b> → divergence check for problem-shaped intents → mode checkpoint (grilling vs. wayfinder) → an <b>uncapped</b> interview that ends when the decision queue is empty, not at a question count. Fact research runs on background Opus sub-agents against primary sources only.</div>
+        <div class="desc">Fable-high entry point. Starting-point calibration → blindspot digest → divergence → grilling or wayfinder → Sol-routed research → Sol-xhigh assumption challenge → Blueprint.</div>
       </div>
       <div class="skill">
         <div class="id"><span class="n">blueprint</span><span class="inv model">auto</span></div>
@@ -609,7 +609,7 @@
       </div>
       <div class="skill">
         <div class="id"><span class="n">produce</span><span class="inv user">user-invoked</span></div>
-        <div class="desc">The non-code lane — execute's mirror, same never-stops-to-ask contract. Rubric-first drafting (tdd's red-before-green, without tests), critique until clean, then debrief.</div>
+        <div class="desc">Shared non-code lane. Fable makes prose and taste work; Sol makes checkable artifacts. Rubric-first drafting, opposite-family critique, then debrief.</div>
       </div>
       <div class="skill">
         <div class="id"><span class="n">critique</span><span class="inv model">auto</span></div>
@@ -625,7 +625,7 @@
       </div>
       <div class="skill">
         <div class="id"><span class="n">codex</span><span class="inv model">auto</span></div>
-        <div class="desc">The cross-model plumbing: runs GPT-5.5 as a subagent via <code>codex-run.sh</code> — model and xhigh effort pinned, resumable threads, prompt on stdin.</div>
+        <div class="desc">GPT plumbing with YOLO <code>sol-medium</code>, <code>sol-xhigh</code>, and <code>luna-xhigh</code> profiles and resumable threads.</div>
       </div>
     </div>
 
@@ -633,11 +633,11 @@
     <div class="skill-list">
       <div class="skill">
         <div class="id"><span class="n">execute</span><span class="inv user">user-invoked</span></div>
-        <div class="desc">The code lane: one ticket, grabbed to merge-ready, fully automatic. Pins the starting commit, classifies seams (<b>mechanical / behavioral / experiential</b>), builds test-first, delegates experiential seams to Claude, runs the gauntlet with Claude reviewing every axis, then debriefs. Reads <code>tdd</code>, <code>gauntlet</code>, and <code>debrief</code> straight from <code>~/.claude/skills/</code> — single source of truth, no forked copies. On a true one-way door with no reversible path, it stops with a decision packet rather than decide for you.</div>
+        <div class="desc">Sol-xhigh code lane: completes the entire spec ticket by ticket, delegates checked leaves to Luna and experiential seams to Fable, runs the final cross-family gauntlet, then debriefs.</div>
       </div>
       <div class="skill">
         <div class="id"><span class="n">claude</span><span class="inv model">auto</span></div>
-        <div class="desc">The mirror plumbing: runs Claude as a subagent via <code>claude-run.sh</code>. Its model picker is the taste rule in miniature — opus for execution-grade work, fable when judgment is the deliverable.</div>
+        <div class="desc">Fable plumbing with YOLO medium/high profiles and resumable sessions.</div>
       </div>
     </div>
 
@@ -649,19 +649,16 @@
       <li><b>tdd</b> — seam confirmation is artifact-first: seams derive from acceptance criteria and record into the spec's <code>## Implementation Notes</code>; the question survives only when no artifact answers.</li>
       <li><b>gauntlet</b> (was code-review) — reworked into the cross-model, blast-radius-scaled, auto-fixing review above; Matt's two-axis skeleton survives at its core.</li>
       <li><b>to-spec / to-tickets</b> — tickets publish <em>into</em> the spec file as a closing <code>## Tickets</code> section, and executing sessions append <code>## Implementation Notes</code>. The spec is the single document the whole loop reads and writes.</li>
-      <li><b>research</b> — background agent pinned to Opus, never inheriting a weaker session model.</li>
+      <li><b>research</b> — Sol owns primary-source synthesis; Luna may handle checked extraction leaves.</li>
     </ol>
   </section>
 
   <!-- ======================= INSTALL ======================= -->
   <section>
     <p class="eyebrow">Sheet 5 — Install</p>
-    <h2>Two copies, one command to start</h2>
-    <pre><span class="c"># Claude side</span>
-cp -R skills/* ~/.claude/skills/
-
-<span class="c"># Codex side</span>
-cp -R agents-skills/* ~/.agents/skills/
+    <h2>One source, one installer</h2>
+    <pre><span class="c"># install shared and agent-specific skills, then verify drift</span>
+./install.sh
 
 <span class="c"># then, in Claude Code:</span>
 /architect &lt;what you want&gt;</pre>

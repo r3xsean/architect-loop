@@ -1,10 +1,10 @@
 ---
 name: architect
-description: Turn a raw intent into resolved architectural decisions — the user decides the one-way doors, Claude decides and logs the churn.
+description: Turn a raw intent into resolved architectural decisions — Fable prepares the one-way doors, the user decides them, and the agent logs the churn.
 disable-model-invocation: true
 ---
 
-The user has said what they want — code or not: a feature, a course, a video, a document. Their job is the **one-way doors** — decisions expensive to reverse: data models, interfaces, UX flows, security boundaries, or their domain's equivalents (structure, voice, visual style, what gets cut). Every two-way door is yours: decide it conservatively, record it in a running **Decisions Log**, never ask.
+Run this skill in a **Claude Fable high** session. The user has said what they want — code or not: a feature, a course, a video, a document. Their job is the **one-way doors** — decisions expensive to reverse: data models, interfaces, UX flows, security boundaries, or their domain's equivalents (structure, voice, visual style, what gets cut). Every two-way door is yours: decide it conservatively, record it in a running **Decisions Log**, never ask.
 
 Where the steps below name the grilling, research, prototype, or wayfinder activities, you MUST invoke the corresponding skill explicitly via the Skill tool (e.g. `Skill(skill: "grilling")`) — do not merely imitate the activity from memory.
 
@@ -31,12 +31,18 @@ Present the shape of the queue: how many questions are answerable now, how many 
 
 ## 5a. Grilling mode
 
-- Fact questions: dispatch background subagents (`model: opus`, pinned — findings feed one-way doors) to read primary sources only — official docs, source code, specs, never a secondary write-up — each returning a cited markdown file. Never block the interview on them; fold returning findings into later questions.
+- Fact questions: invoke the `research` skill. It routes synthesis to Sol and may fan bounded extraction out to Luna. Never block the interview on it; fold returning findings into later questions.
 - Taste questions ("I'll know it when I see it"): **calibrate before you show.** If step 1 says the user can judge this domain, build one throwaway HTML file of 3–4 wildly different variants for the user to react to. If they lack the vocabulary to know what good looks like, variants only produce confident wrong picks — teach the domain's quality dimensions first (a short explainer, folded into or following the digest), *then* show variants.
 - The interview itself: invoke the `grilling` skill via the Skill tool and run the interview under its rules — one question at a time, highest blast radius first. No cap on count: done only when the decision queue is empty.
 
-Then invoke the `blueprint` skill via the Skill tool.
+When the queue is empty, continue to step 6.
 
 ## 5b. Wayfinder mode
 
 Charting the map is its own session's work. Produce a charting brief — notes, the queue as candidate tickets typed `research` / `prototype` / `grilling` / `task` with their blocking edges, the fog sketch — then invoke the `wayfinder` skill via the Skill tool, passing the brief as its input. Stop after handing off.
+
+## 6. Cross-family challenge
+
+Before Blueprint, send the intent, Decisions Log, inspected territory, and resolved queue to Codex via `codex-run.sh sol-xhigh`. Ask only for hidden assumptions, feasibility contradictions, and missing one-way doors — not a replacement design. Any material new one-way door reopens the queue under the grilling rules; two-way-door corrections are logged directly. Done when the challenge leaves no unresolved one-way door.
+
+Then invoke the `blueprint` skill in the same Fable high session.
